@@ -1,0 +1,1269 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Chat GPT AI Visibility Audit</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Rubik:wght@300;400;500;600;700;900&display=swap');
+
+    :root {
+      --space-cadet: #21295C;
+      --jungle-green: #21A179;
+      --light-sea-green: #20A39E;
+      --green-yellow: #BEEE62;
+      --yale-blue: #1B3B6F;
+    }
+
+    * {
+      font-family: 'Rubik', sans-serif;
+    }
+
+    h1, h2, h3, .heading {
+      font-family: 'Bebas Neue', sans-serif;
+      letter-spacing: 0.5px;
+    }
+
+    body {
+      background: linear-gradient(135deg, var(--yale-blue) 0%, var(--space-cadet) 100%);
+      min-height: 100vh;
+    }
+
+    .container-main {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 2rem;
+    }
+
+    .glass-effect {
+      background: rgba(255, 255, 255, 0.98);
+      backdrop-filter: blur(10px);
+      border-radius: 12px;
+      box-shadow: 0 8px 32px rgba(33, 41, 92, 0.15);
+      transition: all 0.3s ease;
+    }
+
+    .glass-effect:hover {
+      box-shadow: 0 12px 40px rgba(33, 41, 92, 0.2);
+    }
+
+    .input-field {
+      transition: all 0.3s ease;
+      border-radius: 8px;
+    }
+
+    .input-field:focus {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(32, 163, 158, 0.3);
+      border-color: var(--light-sea-green);
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, var(--light-sea-green) 0%, var(--jungle-green) 100%);
+      transition: all 0.3s ease;
+      border-radius: 8px;
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 20px rgba(32, 163, 158, 0.4);
+    }
+
+    .btn-primary:active {
+      transform: translateY(0);
+    }
+
+    .btn-primary:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+      transform: none;
+    }
+
+    .step-card {
+      border-left: 4px solid var(--light-sea-green);
+      transition: all 0.3s ease;
+      border-radius: 10px;
+    }
+
+    .step-card:hover {
+      box-shadow: 0 6px 16px rgba(33, 41, 92, 0.12);
+      transform: translateX(2px);
+    }
+
+    .accent-border {
+      border-color: var(--green-yellow);
+    }
+
+    .accent-bg {
+      background-color: var(--green-yellow);
+    }
+
+    .accent-text {
+      color: var(--green-yellow);
+    }
+
+    .hidden {
+      display: none;
+    }
+
+    .spinner {
+      border: 3px solid rgba(190, 238, 98, 0.3);
+      border-top: 3px solid var(--green-yellow);
+      border-radius: 50%;
+      width: 20px;
+      height: 20px;
+      animation: spin 1s linear infinite;
+    }
+
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+
+    .progress-bar {
+      background: linear-gradient(90deg, var(--jungle-green) 0%, var(--green-yellow) 100%);
+      transition: width 0.4s ease;
+    }
+
+    .card-hover {
+      transition: all 0.3s ease;
+    }
+
+    .card-hover:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 8px 24px rgba(32, 163, 158, 0.2);
+    }
+  </style>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            'space-cadet': '#21295C',
+            'jungle-green': '#21A179',
+            'light-sea-green': '#20A39E',
+            'green-yellow': '#BEEE62',
+            'yale-blue': '#1B3B6F',
+          },
+          fontFamily: {
+            'heading': ['Bebas Neue', 'sans-serif'],
+            'body': ['Rubik', 'sans-serif'],
+          }
+        }
+      }
+    }
+  </script>
+</head>
+<body>
+  <div class="container-main">
+    <!-- Header (F-01) -->
+    <header class="text-center mb-8">
+      <h1 class="font-heading text-6xl font-bold text-white mb-3 tracking-wide">Chat GPT AI Visibility Audit</h1>
+      <p class="font-body text-xl text-green-yellow font-light">Are you showing up in AI Search?</p>
+    </header>
+
+    <!-- Main Content Card -->
+    <div class="glass-effect p-8 mb-6">
+      <!-- Query Inputs Section (F-02) -->
+      <div id="queryInputs" class="mb-8">
+        <h2 class="font-heading text-4xl font-bold text-space-cadet mb-6 tracking-wide">Conversations your Customers have with AI</h2>
+
+        <div class="space-y-4">
+          <div>
+            <label for="queryStep1" class="block text-sm font-semibold text-space-cadet mb-2">Prompt 1</label>
+            <input
+              type="text"
+              id="queryStep1"
+              class="input-field w-full px-4 py-3 border-2 border-gray-300 rounded-lg focus:outline-none"
+              placeholder=""
+            />
+          </div>
+
+          <div>
+            <label for="queryStep2" class="block text-sm font-semibold text-space-cadet mb-2">Prompt 2</label>
+            <input
+              type="text"
+              id="queryStep2"
+              class="input-field w-full px-4 py-3 border-2 border-gray-300 rounded-lg focus:outline-none"
+              placeholder=""
+            />
+          </div>
+
+          <div>
+            <label for="queryStep3" class="block text-sm font-semibold text-space-cadet mb-2">Prompt 3</label>
+            <input
+              type="text"
+              id="queryStep3"
+              class="input-field w-full px-4 py-3 border-2 border-gray-300 rounded-lg focus:outline-none"
+              placeholder=""
+            />
+          </div>
+
+          <div>
+            <label for="queryStep4" class="block text-sm font-semibold text-space-cadet mb-2">Prompt 4</label>
+            <input
+              type="text"
+              id="queryStep4"
+              class="input-field w-full px-4 py-3 border-2 border-gray-300 rounded-lg focus:outline-none"
+              placeholder=""
+            />
+          </div>
+
+          <div>
+            <label for="queryStep5" class="block text-sm font-semibold text-space-cadet mb-2">Prompt 5</label>
+            <input
+              type="text"
+              id="queryStep5"
+              class="input-field w-full px-4 py-3 border-2 border-gray-300 rounded-lg focus:outline-none"
+              placeholder=""
+            />
+          </div>
+
+          <div>
+            <label for="queryStep6" class="block text-sm font-semibold text-space-cadet mb-2">Prompt 6</label>
+            <input
+              type="text"
+              id="queryStep6"
+              class="input-field w-full px-4 py-3 border-2 border-gray-300 rounded-lg focus:outline-none"
+              placeholder=""
+            />
+          </div>
+        </div>
+      </div>
+
+      <!-- Action Button (F-03) -->
+      <div class="flex justify-between items-center mb-6">
+        <button
+          id="searchButton"
+          class="btn-primary text-white font-semibold px-8 py-4 rounded-lg text-lg flex items-center gap-2 shadow-lg"
+        >
+          <span id="buttonText" class="font-body">Run Sequential Analysis</span>
+          <div id="buttonSpinner" class="spinner hidden"></div>
+        </button>
+
+        <button
+          id="settingsToggle"
+          class="text-space-cadet hover:text-jungle-green font-medium px-4 py-2 border-2 border-light-sea-green rounded-lg transition-all hover:shadow-md"
+        >
+          ⚙️ Settings
+        </button>
+      </div>
+
+      <!-- Settings Panel (F-04) -->
+      <div id="settingsPanel" class="hidden mb-6 p-6 bg-gradient-to-br from-light-sea-green/5 to-jungle-green/5 rounded-lg border-2 border-light-sea-green/30">
+        <h3 class="font-heading text-2xl font-bold text-space-cadet mb-4 tracking-wide">API Configuration</h3>
+        <div>
+          <label for="apiKeyInput" class="block text-sm font-semibold text-space-cadet mb-2">OpenAI API Key</label>
+          <input
+            type="password"
+            id="apiKeyInput"
+            class="input-field w-full px-4 py-3 border-2 border-gray-300 rounded-lg focus:outline-none mb-2"
+            placeholder="Enter your OpenAI API key (sk-...)..."
+          />
+          <div id="keyStatus" class="text-sm mb-2"></div>
+          <p class="text-xs text-gray-600">Your API key is stored locally and never sent to any server except OpenAI.</p>
+        </div>
+      </div>
+
+      <!-- Status Message -->
+      <div id="statusMessage" class="hidden p-4 rounded-lg mb-6"></div>
+    </div>
+
+    <!-- Results Container -->
+    <div id="sequentialResultsContainer" class="space-y-6">
+      <!-- Dynamic results will be inserted here -->
+    </div>
+  </div>
+
+  <script>
+    // Global Constants
+    const MODEL_NAME = 'gpt-4o';
+    const MAX_RETRIES = 3;
+    const LOCAL_STORAGE_KEY = 'openai_api_key';
+    const OPENAI_API_BASE = 'https://api.openai.com/v1';
+
+    // Sequential Tasks Definition
+    const SEQUENTIAL_TASKS = [
+      {
+        title: 'Prompt 1',
+        system: (query) => `You are a shopping assistant.
+
+CRITICAL: You MUST include 4-10 specific web sources at the end of your response in this EXACT format:
+
+SOURCES:
+1. [Source Name] - URL: https://example.com
+2. [Source Name] - URL: https://example.com
+
+Include real, verifiable URLs from authoritative sources. 
+
+Specify any retailers or brands mentioned.
+
+RETAILERS: 
+1. [Retailer] - URL: https://example.com
+2. [Retailer] - URL: https://example.com
+3. [Retailer] - URL: https://example.com
+
+BRAND: 
+1. [Brand] - URL: https://example.com
+2. [Brand] - URL: https://example.com
+3. [Brand] - URL: https://example.com
+`,
+        user: (query, previousResults) => query,
+        grounded: true,
+        analysis: (sources) => analyzeSourcesForStep(sources, 1)
+      },
+      {
+        title: 'Prompt 2',
+        system: (query) => `You are a shopping assistant.
+
+CRITICAL: You MUST include 4-10 specific web sources at the end of your response in this EXACT format:
+
+SOURCES:
+1. [Source Name] - URL: https://example.com
+2. [Source Name] - URL: https://example.com
+
+Include real, verifiable URLs from authoritative sources. 
+
+Specify any retailers or brands mentioned.
+
+RETAILERS: 
+1. [Retailer] - URL: https://example.com
+2. [Retailer] - URL: https://example.com
+3. [Retailer] - URL: https://example.com
+
+BRAND: 
+1. [Brand] - URL: https://example.com
+2. [Brand] - URL: https://example.com
+3. [Brand] - URL: https://example.com`,
+        user: (query, previousResults) => `${query}\n\nPrevious Research:\n${previousResults[0]?.content || 'None'}`,
+        grounded: true,
+        analysis: (sources) => analyzeSourcesForStep(sources, 2)
+      },
+      {
+        title: 'Prompt 3',
+        system: (query) => `You are a shopping assistant.
+
+CRITICAL: You MUST include 4-10 specific web sources at the end of your response in this EXACT format:
+
+SOURCES:
+1. [Source Name] - URL: https://example.com
+2. [Source Name] - URL: https://example.com
+
+Include real, verifiable URLs from authoritative sources. 
+
+Specify any retailers or brands mentioned.
+
+RETAILERS: 
+1. [Retailer] - URL: https://example.com
+2. [Retailer] - URL: https://example.com
+3. [Retailer] - URL: https://example.com
+
+BRAND: 
+1. [Brand] - URL: https://example.com
+2. [Brand] - URL: https://example.com
+3. [Brand] - URL: https://example.com`,
+        user: (query, previousResults) => `${query}\n\nPrevious Research:\n${previousResults.map((r, i) => `Step ${i + 1}:\n${r.content}`).join('\n\n')}`,
+        grounded: true,
+        analysis: (sources) => analyzeSourcesForStep(sources, 3)
+      },
+      {
+        title: 'Prompt 4',
+        system: (query) => `You are a shopping assistant.
+
+CRITICAL: You MUST include 4-10 specific web sources at the end of your response in this EXACT format:
+
+SOURCES:
+1. [Source Name] - URL: https://example.com
+2. [Source Name] - URL: https://example.com
+
+Include real, verifiable URLs from authoritative sources. 
+
+Specify any retailers or brands mentioned.
+
+RETAILERS: 
+1. [Retailer] - URL: https://example.com
+2. [Retailer] - URL: https://example.com
+3. [Retailer] - URL: https://example.com
+
+BRAND: 
+1. [Brand] - URL: https://example.com
+2. [Brand] - URL: https://example.com
+3. [Brand] - URL: https://example.com`,
+        user: (query, previousResults) => `${query}\n\nPrevious Research:\n${previousResults.map((r, i) => `Step ${i + 1}:\n${r.content}`).join('\n\n')}`,
+        grounded: true,
+        analysis: (sources) => analyzeSourcesForStep(sources, 4)
+      },
+      {
+        title: 'Prompt 5',
+        system: (query) => `You are a shopping assistant.
+
+CRITICAL: You MUST include 4-10 specific web sources at the end of your response in this EXACT format:
+
+SOURCES:
+1. [Source Name] - URL: https://example.com
+2. [Source Name] - URL: https://example.com
+
+Include real, verifiable URLs from authoritative sources. 
+
+Specify any retailers or brands mentioned.
+
+RETAILERS: 
+1. [Retailer] - URL: https://example.com
+2. [Retailer] - URL: https://example.com
+3. [Retailer] - URL: https://example.com
+
+BRAND: 
+1. [Brand] - URL: https://example.com
+2. [Brand] - URL: https://example.com
+3. [Brand] - URL: https://example.com`,
+        user: (query, previousResults) => `${query}\n\nAll Previous Responses:\n${previousResults.map((r, i) => `Step ${i + 1}:\n${r.content}`).join('\n\n')}`,
+        grounded: true,
+        analysis: (sources) => analyzeSourcesForStep(sources, 5)
+      },
+      {
+        title: 'AI Visibility Analysis',
+        system: (query) => `You are an AI Visibility researcher. create an AI Visibiluty audit identifying the top cited sources, brands and retailers for this prompt sequence. Explain why each of these may be heavily cited by open AI and provide AI Visibility reccommendations on what a brand can do to ensure they are cited in this sequence too.`,
+        user: (query, previousResults) => `${query}\n\nComplete Research Summary:\n${previousResults.map((r, i) => `Step ${i + 1}:\n${r.content}`).join('\n\n')}`,
+        grounded: false,
+        analysis: (sources) => analyzeSourcesForStep(sources, 6)
+      }
+    ];
+
+    // ===== API KEY MANAGEMENT (F-02) =====
+
+    function loadApiKey() {
+      const key = localStorage.getItem(LOCAL_STORAGE_KEY);
+      if (key) {
+        document.getElementById('apiKeyInput').value = key;
+      }
+      updateKeyStatus();
+      return key;
+    }
+
+    function saveApiKey(key) {
+      if (key && key.trim()) {
+        localStorage.setItem(LOCAL_STORAGE_KEY, key.trim());
+        updateKeyStatus();
+        return true;
+      }
+      return false;
+    }
+
+    function updateKeyStatus() {
+      const key = localStorage.getItem(LOCAL_STORAGE_KEY);
+      const statusElement = document.getElementById('keyStatus');
+
+      if (key && key.trim()) {
+        statusElement.textContent = '✓ API Key loaded';
+        statusElement.className = 'text-sm mb-2 text-green-600 font-medium';
+      } else {
+        statusElement.textContent = '⚠ No API Key set';
+        statusElement.className = 'text-sm mb-2 text-orange-600 font-medium';
+      }
+    }
+
+    function toggleSettings() {
+      const panel = document.getElementById('settingsPanel');
+      panel.classList.toggle('hidden');
+    }
+
+    // ===== NETWORKING RELIABILITY (5.3) =====
+
+    async function fetchWithRetry(url, options = {}, maxRetries = MAX_RETRIES) {
+      let lastError;
+
+      for (let attempt = 0; attempt <= maxRetries; attempt++) {
+        try {
+          const response = await fetch(url, options);
+
+          if (response.status === 429) {
+            if (attempt < maxRetries) {
+              const backoffDelay = Math.pow(2, attempt) * 1000;
+              console.warn(`Rate limit hit (429). Retrying in ${backoffDelay}ms...`);
+              await new Promise(resolve => setTimeout(resolve, backoffDelay));
+              continue;
+            }
+          }
+
+          if (!response.ok) {
+            const errorData = await response.json().catch(() => ({}));
+            throw new Error(errorData.error?.message || `HTTP ${response.status}: ${response.statusText}`);
+          }
+
+          return response;
+        } catch (error) {
+          lastError = error;
+
+          if (attempt < maxRetries && (error.name === 'TypeError' || error.message.includes('Failed to fetch'))) {
+            const backoffDelay = Math.pow(2, attempt) * 1000;
+            console.warn(`Network error. Retrying in ${backoffDelay}ms...`, error);
+            await new Promise(resolve => setTimeout(resolve, backoffDelay));
+            continue;
+          }
+
+          if (attempt >= maxRetries) {
+            throw lastError;
+          }
+        }
+      }
+
+      throw lastError;
+    }
+
+    // ===== UI UTILITIES (O-01) =====
+
+    function markdownToHtml(markdown) {
+      if (!markdown) return '';
+
+      let html = markdown;
+
+      html = html.replace(/^### (.+)$/gim, '<h3 class="text-xl font-bold mt-4 mb-2 text-gray-800">$1</h3>');
+      html = html.replace(/^## (.+)$/gim, '<h2 class="text-2xl font-bold mt-6 mb-3 text-gray-800">$1</h2>');
+      html = html.replace(/^# (.+)$/gim, '<h1 class="text-3xl font-bold mt-8 mb-4 text-gray-800">$1</h1>');
+
+      html = html.replace(/\*\*\*(.+?)\*\*\*/g, '<strong class="font-bold"><em class="italic">$1</em></strong>');
+      html = html.replace(/\*\*(.+?)\*\*/g, '<strong class="font-bold">$1</strong>');
+      html = html.replace(/\*(.+?)\*/g, '<em class="italic">$1</em>');
+
+      html = html.replace(/^- (.+)$/gim, '<li class="ml-4">$1</li>');
+      html = html.replace(/(<li class="ml-4">.*<\/li>)/s, '<ul class="list-disc ml-6 my-3 space-y-1">$1</ul>');
+
+      html = html.replace(/\n\n/g, '</p><p class="mb-3 text-gray-700">');
+      html = '<p class="mb-3 text-gray-700">' + html + '</p>';
+
+      html = html.replace(/<p class="mb-3 text-gray-700"><\/p>/g, '');
+
+      return html;
+    }
+
+    // ===== DATA UTILITIES =====
+
+    function extractDomain(uri) {
+      if (!uri) return 'Unknown';
+
+      try {
+        const url = new URL(uri);
+        let domain = url.hostname;
+
+        domain = domain.replace(/^www\./, '');
+
+        return domain;
+      } catch (e) {
+        const match = uri.match(/(?:https?:\/\/)?(?:www\.)?([^\/]+)/);
+        return match ? match[1] : 'Unknown';
+      }
+    }
+
+    function getSourceType(uri, title = '') {
+      if (!uri) return 'Unknown';
+
+      const uriLower = uri.toLowerCase();
+      const titleLower = title.toLowerCase();
+
+      if (uriLower.includes('.pdf') || titleLower.includes('[pdf]')) {
+        return 'Research/PDF';
+      }
+      if (uriLower.includes('arxiv.org') || uriLower.includes('scholar.google') || uriLower.includes('researchgate.net')) {
+        return 'Research/Academic';
+      }
+      if (uriLower.includes('wikipedia.org') || uriLower.includes('britannica.com')) {
+        return 'Encyclopedia';
+      }
+      if (uriLower.includes('github.com') || uriLower.includes('gitlab.com')) {
+        return 'Code Repository';
+      }
+      if (uriLower.includes('.gov')) {
+        return 'Government';
+      }
+      if (uriLower.includes('.edu')) {
+        return 'Educational';
+      }
+      if (uriLower.includes('news') || uriLower.includes('press') ||
+          uriLower.includes('blog') || uriLower.includes('medium.com') ||
+          uriLower.includes('reuters.com') || uriLower.includes('bbc.')) {
+        return 'News/Press';
+      }
+      if (uriLower.includes('youtube.com') || uriLower.includes('vimeo.com')) {
+        return 'Video';
+      }
+
+      return 'Web Source';
+    }
+
+    // ===== RELEVANCE CALCULATION (O-04) =====
+
+    function calculateRelevance(query, snippet) {
+      if (!query || !snippet) return 0;
+
+      const queryLower = query.toLowerCase();
+      const snippetLower = snippet.toLowerCase();
+
+      const queryTerms = queryLower
+        .split(/\s+/)
+        .filter(term => term.length > 2)
+        .filter(term => !['the', 'and', 'or', 'but', 'in', 'on', 'at', 'to', 'for', 'of', 'with', 'by', 'from', 'as', 'is', 'was', 'are', 'were'].includes(term));
+
+      if (queryTerms.length === 0) return 0;
+
+      let matchCount = 0;
+      queryTerms.forEach(term => {
+        if (snippetLower.includes(term)) {
+          matchCount++;
+        }
+      });
+
+      const relevanceScore = (matchCount / queryTerms.length) * 100;
+
+      return Math.round(relevanceScore);
+    }
+
+    // ===== SOURCE ANALYSIS =====
+
+    function analyzeSourcesForStep(sources, stepNumber) {
+      if (!sources || sources.length === 0) {
+        return '<p class="text-gray-600 italic">No sources available for this step.</p>';
+      }
+
+      const sourcesByType = {};
+      sources.forEach(source => {
+        const type = getSourceType(source.uri, source.title || '');
+        if (!sourcesByType[type]) {
+          sourcesByType[type] = [];
+        }
+        sourcesByType[type].push(source);
+      });
+
+      let html = '<div class="space-y-4 bg-gray-50 p-4 rounded-lg border border-gray-200">';
+      html += `<p class="font-bold text-gray-800">Source Analysis: ${sources.length} total sources</p>`;
+
+      const sortedTypes = Object.entries(sourcesByType).sort((a, b) => b[1].length - a[1].length);
+
+      for (const [type, typeSources] of sortedTypes) {
+        html += `<div class="ml-4 border-l-2 border-blue-300 pl-3">`;
+        html += `<p class="text-sm font-semibold text-gray-700 mb-2">${type} (${typeSources.length})</p>`;
+        html += `<ul class="space-y-1">`;
+
+        typeSources.slice(0, 5).forEach(source => {
+          const domain = extractDomain(source.uri);
+          const title = source.title || domain;
+          html += `<li class="text-sm">
+            <a href="${source.uri}" target="_blank" rel="noopener noreferrer" class="text-blue-600 hover:text-blue-800 hover:underline">
+              ${title.length > 60 ? title.substring(0, 60) + '...' : title}
+            </a>
+          </li>`;
+        });
+
+        if (typeSources.length > 5) {
+          html += `<li class="text-xs text-gray-500 italic">+ ${typeSources.length - 5} more</li>`;
+        }
+
+        html += `</ul></div>`;
+      }
+
+      html += '</div>';
+      return html;
+    }
+
+    // ===== CORE LLM SEARCH LOGIC =====
+
+    let allCitations = [];
+
+    async function performSearch(stepQuery, task) {
+      const apiKey = loadApiKey();
+      if (!apiKey) {
+        throw new Error('API key not found');
+      }
+
+      const systemInstruction = task.system(stepQuery);
+      const userPrompt = stepQuery;
+
+      const messages = [
+        { role: 'system', content: systemInstruction },
+        { role: 'user', content: userPrompt }
+      ];
+
+      const requestBody = {
+        model: MODEL_NAME,
+        messages: messages,
+        temperature: 0.7,
+        max_tokens: 8192
+      };
+
+      const url = `${OPENAI_API_BASE}/chat/completions`;
+
+      const response = await fetchWithRetry(url, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${apiKey}`
+        },
+        body: JSON.stringify(requestBody)
+      });
+
+      const data = await response.json();
+
+      if (data.error) {
+        throw new Error(data.error.message || 'OpenAI API error');
+      }
+
+      if (!data.choices || data.choices.length === 0) {
+        throw new Error('No response choices returned from API');
+      }
+
+      const choice = data.choices[0];
+      let fullText = choice.message?.content || '';
+
+      let text = fullText;
+      let sources = [];
+
+      if (task.grounded) {
+        const sourcesMatch = fullText.match(/SOURCES:\s*([\s\S]*?)(?:\n\n|$)/i);
+        if (sourcesMatch) {
+          const sourcesText = sourcesMatch[1];
+          text = fullText.substring(0, sourcesMatch.index).trim();
+
+          const sourceLines = sourcesText.split('\n').filter(line => line.trim());
+          sourceLines.forEach(line => {
+            const match = line.match(/^\d+\.\s*\[?([^\]]+?)\]?\s*-?\s*URL:\s*(https?:\/\/[^\s]+)/i);
+            if (match) {
+              const title = match[1].trim();
+              const url = match[2].trim();
+              sources.push({
+                uri: url,
+                title: title,
+                snippet: title
+              });
+            }
+          });
+        }
+
+        if (sources.length === 0) {
+          console.warn(`Warning: Step expected grounding but received ${sources.length} sources`);
+        }
+      }
+
+      return {
+        text,
+        sources,
+        fullResponse: data
+      };
+    }
+
+    // ===== SEQUENTIAL EXECUTION =====
+
+    async function runSequentialSearch() {
+      const apiKey = loadApiKey();
+
+      if (!apiKey || !apiKey.trim()) {
+        showStatus('Please enter your OpenAI API key in Settings.', 'error');
+        toggleSettings();
+        return;
+      }
+
+      const queries = [];
+      for (let i = 1; i <= 6; i++) {
+        const query = document.getElementById(`queryStep${i}`).value.trim();
+        if (!query) {
+          showStatus(`Please enter a query for Step ${i}.`, 'error');
+          return;
+        }
+        queries.push(query);
+      }
+
+      const searchButton = document.getElementById('searchButton');
+      const buttonText = document.getElementById('buttonText');
+      const buttonSpinner = document.getElementById('buttonSpinner');
+      const resultsContainer = document.getElementById('sequentialResultsContainer');
+
+      searchButton.disabled = true;
+      buttonSpinner.classList.remove('hidden');
+      buttonText.textContent = 'Running Analysis...';
+
+      resultsContainer.innerHTML = '';
+      allCitations = [];
+
+      try {
+        showStatus('Starting sequential research analysis...', 'info');
+
+        const previousResults = [];
+
+        for (let i = 0; i < SEQUENTIAL_TASKS.length; i++) {
+          const task = SEQUENTIAL_TASKS[i];
+          const query = queries[i];
+
+          showStatus(`Processing ${task.title}...`, 'info');
+
+          await executeStep(task, query, previousResults, i + 1);
+
+          previousResults.push({
+            title: task.title,
+            content: resultsContainer.querySelector(`#step-${i + 1}-content`)?.textContent || ''
+          });
+
+          await new Promise(resolve => setTimeout(resolve, 500));
+        }
+
+        showStatus('Generating final analysis and SOV report...', 'info');
+        await runFinalCitationAnalysis(resultsContainer);
+
+        showStatus('Sequential research analysis completed successfully!', 'success');
+
+      } catch (error) {
+        console.error('Sequential search error:', error);
+        showStatus(`Error: ${error.message}`, 'error');
+      } finally {
+        searchButton.disabled = false;
+        buttonSpinner.classList.add('hidden');
+        buttonText.textContent = 'Run Sequential Analysis';
+      }
+    }
+
+    async function executeStep(task, query, previousResults, stepNumber) {
+      const resultsContainer = document.getElementById('sequentialResultsContainer');
+
+      const stepCard = document.createElement('div');
+      stepCard.className = 'glass-effect p-6 step-card border-l-4 border-light-sea-green/50';
+      stepCard.id = `step-${stepNumber}`;
+
+      stepCard.innerHTML = `
+        <div class="flex items-center justify-between mb-4">
+          <h3 class="font-heading text-3xl font-bold text-space-cadet tracking-wide">${task.title}</h3>
+          <div id="step-${stepNumber}-loader" class="spinner"></div>
+        </div>
+        <div id="step-${stepNumber}-content" class="text-gray-700 font-body">
+          <p class="italic">Processing query and analyzing sources...</p>
+        </div>
+      `;
+
+      resultsContainer.appendChild(stepCard);
+
+      try {
+        const userQuery = task.user(query, previousResults);
+        const result = await performSearch(userQuery, task);
+
+        const contentDiv = stepCard.querySelector(`#step-${stepNumber}-content`);
+        const loader = stepCard.querySelector(`#step-${stepNumber}-loader`);
+
+        if (result.sources && result.sources.length > 0) {
+          result.sources.forEach(source => {
+            if (!allCitations.find(c => c.uri === source.uri)) {
+              allCitations.push({
+                ...source,
+                stepNumber,
+                query
+              });
+            }
+          });
+        }
+
+        const htmlContent = markdownToHtml(result.text);
+
+        let citationsHtml = '';
+        if (task.grounded && result.sources && result.sources.length > 0) {
+          loader.style.display = 'block';
+          contentDiv.innerHTML = `
+            <div id="step-${stepNumber}-summary" class="prose max-w-none mb-6">
+              ${htmlContent}
+            </div>
+            <div class="mt-6 pt-6 border-t-2 border-light-sea-green/20">
+              <h4 class="font-heading text-2xl font-bold text-space-cadet mb-4 tracking-wide">Detailed Source Analysis (${result.sources.length})</h4>
+              <div id="step-${stepNumber}-citations">
+                <p class="text-gray-600 italic">Analyzing individual sources...</p>
+              </div>
+            </div>
+          `;
+
+          const citationsContainer = stepCard.querySelector(`#step-${stepNumber}-citations`);
+          citationsHtml = await renderDetailedCitations(result.sources, query, stepNumber);
+          citationsContainer.innerHTML = citationsHtml;
+        } else {
+          contentDiv.innerHTML = `
+            <div id="step-${stepNumber}-summary" class="prose max-w-none mb-6">
+              ${htmlContent}
+            </div>
+            ${!task.grounded ? `
+              <div class="mt-4 p-4 bg-light-sea-green/10 border-2 border-light-sea-green/30 rounded-lg">
+                <p class="text-sm text-space-cadet font-medium">
+                  <strong>Note:</strong> This step uses non-grounded analysis based on previous research findings.
+                </p>
+              </div>
+            ` : `
+              <div class="mt-4 p-4 bg-green-yellow/20 border-2 border-green-yellow/50 rounded-lg">
+                <p class="text-sm text-space-cadet font-medium">
+                  <strong>Note:</strong> No sources were returned for this grounded step.
+                </p>
+              </div>
+            `}
+          `;
+        }
+
+        loader.remove();
+        stepCard.classList.remove('border-light-sea-green/50');
+        stepCard.classList.add('border-jungle-green');
+
+      } catch (error) {
+        const contentDiv = stepCard.querySelector(`#step-${stepNumber}-content`);
+        const loader = stepCard.querySelector(`#step-${stepNumber}-loader`);
+
+        if (loader) loader.remove();
+
+        stepCard.classList.remove('border-light-sea-green/50');
+        stepCard.classList.add('border-red-600');
+
+        contentDiv.innerHTML = `
+          <div class="bg-red-50 border border-red-300 rounded-lg p-4">
+            <p class="text-red-800 font-semibold">Error processing this step:</p>
+            <p class="text-red-700 text-sm mt-2">${error.message}</p>
+          </div>
+        `;
+
+        throw error;
+      }
+    }
+
+    async function getExplanation(stepQuery, source, task) {
+      const apiKey = loadApiKey();
+      if (!apiKey) {
+        throw new Error('API key not found');
+      }
+
+      const systemInstruction = `You are a relevance analyst. Given a search query and a source result, provide a brief 1-2 sentence explanation of how this specific source is relevant to the query. Be concise and specific.`;
+
+      const userPrompt = `Query: "${stepQuery}"
+
+Source Title: ${source.title || 'Unknown'}
+Source URL: ${source.uri}
+
+Explain how this source is relevant to the query in 1-2 sentences.`;
+
+      const requestBody = {
+        model: MODEL_NAME,
+        messages: [
+          { role: 'system', content: systemInstruction },
+          { role: 'user', content: userPrompt }
+        ],
+        temperature: 0.3,
+        max_tokens: 256
+      };
+
+      const url = `${OPENAI_API_BASE}/chat/completions`;
+
+      try {
+        const response = await fetchWithRetry(url, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${apiKey}`
+          },
+          body: JSON.stringify(requestBody)
+        });
+
+        const data = await response.json();
+
+        if (data.error) {
+          console.error('OpenAI API error:', data.error);
+          return 'Unable to generate explanation for this source.';
+        }
+
+        if (!data.choices || data.choices.length === 0) {
+          return 'Unable to generate explanation for this source.';
+        }
+
+        const text = data.choices[0].message?.content || '';
+        return text.trim() || 'Unable to generate explanation for this source.';
+      } catch (error) {
+        console.error('Error getting explanation:', error);
+        return 'Unable to generate explanation for this source.';
+      }
+    }
+
+    async function renderDetailedCitations(sources, query, stepNumber) {
+      let html = '<div class="space-y-4">';
+
+      for (let i = 0; i < sources.length; i++) {
+        const source = sources[i];
+        const domain = extractDomain(source.uri);
+        const sourceType = getSourceType(source.uri, source.title || '');
+
+        const snippet = source.snippet || source.title || domain;
+        const relevanceScore = calculateRelevance(query, snippet);
+
+        let explanation = 'Analyzing relevance...';
+
+        try {
+          explanation = await getExplanation(query, source, null);
+        } catch (error) {
+          console.error('Error getting explanation for source:', error);
+          explanation = 'Unable to analyze relevance for this source.';
+        }
+
+        const relevanceClass = relevanceScore >= 70 ? 'text-jungle-green' : relevanceScore >= 40 ? 'text-light-sea-green' : 'text-orange-600';
+        const relevanceLabel = relevanceScore >= 70 ? 'High Relevance' : relevanceScore >= 40 ? 'Medium Relevance' : 'Low Relevance';
+
+        html += `
+          <div class="result-card-wrapper card-hover border-2 border-light-sea-green/20 rounded-lg p-4 bg-white">
+            <div class="flex items-start justify-between mb-3">
+              <div class="flex-1">
+                <a href="${source.uri}" target="_blank" rel="noopener noreferrer"
+                   class="text-lg font-semibold text-light-sea-green hover:text-jungle-green hover:underline transition-colors">
+                  ${source.title || domain}
+                </a>
+                <div class="flex items-center gap-3 mt-1">
+                  <span class="text-xs text-gray-500">${domain}</span>
+                  <span class="text-xs px-2 py-1 bg-light-sea-green/10 text-space-cadet rounded font-medium">${sourceType}</span>
+                </div>
+              </div>
+              <div class="ml-4 text-right">
+                <div class="text-2xl font-bold ${relevanceClass}">${relevanceScore}%</div>
+                <div class="text-xs ${relevanceClass} font-semibold">${relevanceLabel}</div>
+              </div>
+            </div>
+
+            <div class="mb-3">
+              <p class="text-sm text-gray-700 italic bg-gradient-to-r from-light-sea-green/5 to-jungle-green/5 p-3 rounded border-l-4 border-light-sea-green">
+                "${snippet.length > 200 ? snippet.substring(0, 200) + '...' : snippet}"
+              </p>
+            </div>
+
+            <div class="bg-gradient-to-br from-light-sea-green/10 to-jungle-green/10 border-2 border-light-sea-green/30 rounded-lg p-3">
+              <p class="text-xs font-semibold text-space-cadet mb-1">Relevance Analysis:</p>
+              <p class="text-sm text-gray-800">${explanation}</p>
+            </div>
+          </div>
+        `;
+      }
+
+      html += '</div>';
+      return html;
+    }
+
+    // ===== FINAL SOV ANALYSIS (O-05, O-06) =====
+
+    async function runFinalCitationAnalysis(resultsContainer) {
+      if (!allCitations || allCitations.length === 0) {
+        const finalCard = document.createElement('div');
+        finalCard.className = 'glass-effect p-6 border-l-4 border-green-yellow';
+        finalCard.id = 'final-analysis';
+
+        finalCard.innerHTML = `
+          <h3 class="font-heading text-3xl font-bold text-space-cadet mb-4 tracking-wide">Final Analysis</h3>
+          <div class="bg-green-yellow/20 border-2 border-green-yellow/50 rounded-lg p-4">
+            <p class="text-space-cadet font-medium">No citations were collected during the sequential analysis.</p>
+          </div>
+        `;
+
+        resultsContainer.appendChild(finalCard);
+        return;
+      }
+
+      const finalCard = document.createElement('div');
+      finalCard.className = 'glass-effect p-6 border-l-4 border-green-yellow';
+      finalCard.id = 'final-analysis';
+
+      finalCard.innerHTML = `
+        <h3 class="font-heading text-4xl font-bold text-space-cadet mb-4 tracking-wide">Final Share of Voice (SOV) Analysis</h3>
+        <div class="text-gray-700 font-body">
+          <p class="italic">Aggregating data and generating strategic insights...</p>
+          <div class="spinner mt-4"></div>
+        </div>
+      `;
+
+      resultsContainer.appendChild(finalCard);
+
+      try {
+        const sourceTypeBreakdown = {};
+        const domainCounts = {};
+
+        allCitations.forEach(citation => {
+          const sourceType = getSourceType(citation.uri, citation.title || '');
+          sourceTypeBreakdown[sourceType] = (sourceTypeBreakdown[sourceType] || 0) + 1;
+
+          const domain = extractDomain(citation.uri);
+          domainCounts[domain] = (domainCounts[domain] || 0) + 1;
+        });
+
+        const sortedSourceTypes = Object.entries(sourceTypeBreakdown)
+          .sort((a, b) => b[1] - a[1]);
+
+        const sortedDomains = Object.entries(domainCounts)
+          .sort((a, b) => b[1] - a[1])
+          .slice(0, 5);
+
+        const totalCitations = allCitations.length;
+
+        let sourceTypeHtml = '<div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">';
+        sortedSourceTypes.forEach(([type, count]) => {
+          const percentage = ((count / totalCitations) * 100).toFixed(1);
+          sourceTypeHtml += `
+            <div class="bg-white border-2 border-light-sea-green/20 rounded-lg p-4 card-hover">
+              <div class="flex justify-between items-center">
+                <span class="font-semibold text-space-cadet">${type}</span>
+                <span class="text-2xl font-bold text-jungle-green">${count}</span>
+              </div>
+              <div class="mt-2">
+                <div class="w-full bg-gray-200 rounded-full h-2.5">
+                  <div class="progress-bar h-2.5 rounded-full" style="width: ${percentage}%"></div>
+                </div>
+                <span class="text-xs text-gray-600 mt-1 font-medium">${percentage}% of total citations</span>
+              </div>
+            </div>
+          `;
+        });
+        sourceTypeHtml += '</div>';
+
+        let domainHtml = '<div class="space-y-3">';
+        sortedDomains.forEach(([domain, count], index) => {
+          const percentage = ((count / totalCitations) * 100).toFixed(1);
+          const medal = index === 0 ? '🥇' : index === 1 ? '🥈' : index === 2 ? '🥉' : '';
+          domainHtml += `
+            <div class="bg-white border-2 border-light-sea-green/30 rounded-lg p-4 card-hover">
+              <div class="flex justify-between items-center mb-2">
+                <span class="font-bold text-space-cadet font-heading text-lg">${medal} ${index + 1}. ${domain}</span>
+                <span class="text-2xl font-bold text-jungle-green">${count}</span>
+              </div>
+              <div class="w-full bg-gray-200 rounded-full h-3">
+                <div class="progress-bar h-3 rounded-full" style="width: ${percentage}%"></div>
+              </div>
+              <div class="flex justify-between mt-2">
+                <span class="text-xs text-gray-600 font-medium">${percentage}% Share of Voice</span>
+                <span class="text-xs font-bold text-jungle-green">${percentage}% SOV</span>
+              </div>
+            </div>
+          `;
+        });
+        domainHtml += '</div>';
+
+        const sovPrompt = `You are a strategic research analyst. Based on the Share of Voice (SOV) analysis below, provide a two-paragraph strategic conclusion.
+
+Total Citations Analyzed: ${totalCitations}
+
+Source Type Breakdown:
+${sortedSourceTypes.map(([type, count]) => `- ${type}: ${count} citations (${((count / totalCitations) * 100).toFixed(1)}%)`).join('\n')}
+
+Top 5 Domains by Share of Voice:
+${sortedDomains.map(([domain, count], index) => `${index + 1}. ${domain}: ${count} citations (${((count / totalCitations) * 100).toFixed(1)}% SOV)`).join('\n')}
+
+Provide a strategic analysis in exactly two paragraphs:
+1. First paragraph: Analyze the source diversity, credibility patterns, and what the SOV distribution reveals about the information landscape.
+2. Second paragraph: Provide actionable strategic recommendations based on these patterns.`;
+
+        const strategicConclusion = await generateStrategicConclusion(sovPrompt);
+
+        const spinner = finalCard.querySelector('.spinner');
+        if (spinner) spinner.remove();
+
+        finalCard.querySelector('div.text-gray-700').innerHTML = `
+          <div class="mb-6">
+            <div class="bg-gradient-to-r from-light-sea-green/20 to-jungle-green/20 border-2 border-green-yellow rounded-lg p-8 mb-6 shadow-lg">
+              <p class="font-heading text-xl font-bold text-space-cadet mb-2 tracking-wide">Total Citations Analyzed</p>
+              <p class="font-heading text-6xl font-bold text-jungle-green">${totalCitations}</p>
+            </div>
+
+            <h4 class="font-heading text-3xl font-bold text-space-cadet mb-4 tracking-wide">Source Type Breakdown</h4>
+            ${sourceTypeHtml}
+
+            <h4 class="font-heading text-3xl font-bold text-space-cadet mb-4 mt-8 tracking-wide">Top 5 Domains by Share of Voice</h4>
+            ${domainHtml}
+          </div>
+
+          <div class="mt-8 pt-6 border-t-2 border-green-yellow">
+            <h4 class="font-heading text-3xl font-bold text-space-cadet mb-4 tracking-wide">Strategic Conclusion</h4>
+            <div class="bg-gradient-to-br from-light-sea-green/10 to-jungle-green/10 border-2 border-light-sea-green/30 rounded-lg p-6">
+              ${markdownToHtml(strategicConclusion)}
+            </div>
+          </div>
+        `;
+
+      } catch (error) {
+        console.error('Error generating final analysis:', error);
+        const spinner = finalCard.querySelector('.spinner');
+        if (spinner) spinner.remove();
+
+        finalCard.querySelector('div.text-gray-700').innerHTML = `
+          <div class="bg-red-50 border-2 border-red-400 rounded-lg p-4">
+            <p class="text-red-800 font-semibold">Error generating final analysis:</p>
+            <p class="text-red-700 text-sm mt-2">${error.message}</p>
+          </div>
+        `;
+      }
+    }
+
+    async function generateStrategicConclusion(prompt) {
+      const apiKey = loadApiKey();
+      if (!apiKey) {
+        throw new Error('API key not found');
+      }
+
+      const systemInstruction = `You are a strategic research analyst specializing in information landscape analysis and Share of Voice (SOV) interpretation. Provide clear, actionable insights based on citation patterns and source diversity.`;
+
+      const requestBody = {
+        model: MODEL_NAME,
+        messages: [
+          { role: 'system', content: systemInstruction },
+          { role: 'user', content: prompt }
+        ],
+        temperature: 0.7,
+        max_tokens: 1024
+      };
+
+      const url = `${OPENAI_API_BASE}/chat/completions`;
+
+      const response = await fetchWithRetry(url, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${apiKey}`
+        },
+        body: JSON.stringify(requestBody)
+      });
+
+      const data = await response.json();
+
+      if (data.error) {
+        throw new Error(data.error.message || 'OpenAI API error');
+      }
+
+      if (!data.choices || data.choices.length === 0) {
+        throw new Error('No response choices returned from API');
+      }
+
+      const text = data.choices[0].message?.content || '';
+      return text.trim() || 'Unable to generate strategic conclusion.';
+    }
+
+    // ===== INITIALIZATION =====
+
+    loadApiKey();
+
+    document.getElementById('settingsToggle').addEventListener('click', toggleSettings);
+
+    document.getElementById('apiKeyInput').addEventListener('input', (e) => {
+      saveApiKey(e.target.value);
+    });
+
+    document.getElementById('searchButton').addEventListener('click', runSequentialSearch);
+
+    // ===== STATUS MESSAGE HELPER =====
+
+    function showStatus(message, type = 'info') {
+      const statusElement = document.getElementById('statusMessage');
+      statusElement.textContent = message;
+      statusElement.classList.remove('hidden');
+
+      const colorClasses = {
+        'info': 'bg-blue-100 text-blue-800 border border-blue-300',
+        'success': 'bg-green-100 text-green-800 border border-green-300',
+        'error': 'bg-red-100 text-red-800 border border-red-300',
+        'warning': 'bg-orange-100 text-orange-800 border border-orange-300'
+      };
+
+      statusElement.className = `p-4 rounded-lg mb-6 ${colorClasses[type] || colorClasses.info}`;
+    }
+
+    function hideStatus() {
+      document.getElementById('statusMessage').classList.add('hidden');
+    }
+  </script>
+</body>
+</html>
